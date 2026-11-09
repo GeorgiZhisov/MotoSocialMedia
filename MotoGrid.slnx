@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MotoGrid.Common/MotoGrid.Common.csproj" />
+    <Project Path="src/MotoGrid.Data/MotoGrid.Data.csproj" />
+    <Project Path="src/MotoGrid.Services/MotoGrid.Services.csproj" />
+    <Project Path="src/MotoGrid.Web/MotoGrid.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MotoGrid.Tests/MotoGrid.Tests.csproj" />
+  </Folder>
+</Solution>
