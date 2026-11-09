@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Configuration, DI and Identity abstractions used by the seeders -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MotoGrid.Common\MotoGrid.Common.csproj" />
   </ItemGroup>
 
