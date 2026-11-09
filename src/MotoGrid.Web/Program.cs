@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MotoGrid.Data;
 using MotoGrid.Data.Models;
+using MotoGrid.Services.Storage;
 using MotoGrid.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,6 +31,14 @@ builder.Services
     })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// ---------- Application services ----------
+builder.Services.AddSingleton(new FileStorageOptions
+{
+    RootPath = Path.Combine(builder.Environment.WebRootPath, "uploads"),
+    RequestPath = "/uploads",
+});
+builder.Services.AddSingleton<IFileStorage, LocalFileStorage>();
 
 // ---------- MVC ----------
 // Every POST request must carry a valid anti-forgery token (CSRF protection).

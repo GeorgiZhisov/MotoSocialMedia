@@ -30,3 +30,6 @@ appsettings.Development.json
 # OS
 Thumbs.db
 .DS_Store
+
+# Files uploaded by users
+src/MotoGrid.Web/wwwroot/uploads/
