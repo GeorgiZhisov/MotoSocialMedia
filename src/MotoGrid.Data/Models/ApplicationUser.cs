@@ -35,4 +35,14 @@ public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
 
     /// <summary>The user's "garage" - the motorcycles they own.</summary>
     public ICollection<Motorcycle> Motorcycles { get; set; } = new HashSet<Motorcycle>();
+
+    public ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+
+    public ICollection<Story> Stories { get; set; } = new HashSet<Story>();
+
+    /// <summary>Users that follow this user.</summary>
+    public ICollection<Follow> Followers { get; set; } = new HashSet<Follow>();
+
+    /// <summary>Users that this user follows.</summary>
+    public ICollection<Follow> Following { get; set; } = new HashSet<Follow>();
 }
