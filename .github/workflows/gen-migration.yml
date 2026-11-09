@@ -1,0 +1,21 @@
+name: Generate migration
+on:
+  push:
+    branches: [ tools/generate-migration ]
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - run: dotnet tool install --global dotnet-ef --version 10.0.13
+      - run: dotnet ef migrations add InitialCreate --project src/MotoGrid.Data --startup-project src/MotoGrid.Web --output-dir Migrations
+      - run: dotnet ef migrations script --project src/MotoGrid.Data --startup-project src/MotoGrid.Web --output schema.sql
+      - uses: actions/upload-artifact@v4
+        with:
+          name: migration
+          path: |
+            src/MotoGrid.Data/Migrations
+            schema.sql
