@@ -1,15 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <ItemGroup>
-    <ProjectReference Include="..\MotoGrid.Services\MotoGrid.Services.csproj" />
-    <ProjectReference Include="..\MotoGrid.Data\MotoGrid.Data.csproj" />
-    <ProjectReference Include="..\MotoGrid.Common\MotoGrid.Common.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Connection string and seed passwords are kept in User Secrets, not in appsettings.json -->
+    <UserSecretsId>motogrid-13936d52-12b1-49a8-9e84-408b3e6abd9d</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MotoGrid.Common\MotoGrid.Common.csproj" />
+    <ProjectReference Include="..\MotoGrid.Data\MotoGrid.Data.csproj" />
+    <ProjectReference Include="..\MotoGrid.Services\MotoGrid.Services.csproj" />
+  </ItemGroup>
 
 </Project>

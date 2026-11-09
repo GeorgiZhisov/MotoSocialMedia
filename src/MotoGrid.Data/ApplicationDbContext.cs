@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MotoGrid.Common.Constants;
 using MotoGrid.Data.Common;
 using MotoGrid.Data.Models;
 
@@ -50,13 +51,13 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        this.ApplyAuditInfoRules();
+        this.ApplyEntityRules();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        this.ApplyAuditInfoRules();
+        this.ApplyEntityRules();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
@@ -85,9 +86,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     /// <summary>
     /// Fills in CreatedOn for new entities and ModifiedOn for changed ones.
     /// </summary>
-    private void ApplyAuditInfoRules()
+    private void ApplyEntityRules()
     {
         var now = DateTime.UtcNow;
+
+        // The default Identity registration page does not ask for a display name yet,
+        // so until it is customized the name is taken from the e-mail (before the @).
+        foreach (var entry in this.ChangeTracker.Entries<ApplicationUser>()
+                     .Where(e => e.State == EntityState.Added && string.IsNullOrWhiteSpace(e.Entity.DisplayName)))
+        {
+            var userName = entry.Entity.UserName ?? entry.Entity.Email ?? "user";
+            var displayName = userName.Split('@')[0];
+            entry.Entity.DisplayName = displayName.Length > ValidationConstants.User.DisplayNameMaxLength
+                ? displayName[..ValidationConstants.User.DisplayNameMaxLength]
+                : displayName;
+        }
 
         foreach (var entry in this.ChangeTracker.Entries<IAuditInfo>())
         {
