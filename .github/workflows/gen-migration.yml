@@ -8,6 +8,13 @@ permissions:
 jobs:
   gen:
     runs-on: ubuntu-latest
+    services:
+      sql:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: Ci_Test_Pass123!
+        ports: [ "1433:1433" ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-dotnet@v4
@@ -15,11 +22,6 @@ jobs:
           dotnet-version: 10.0.x
       - run: dotnet tool install --global dotnet-ef --version 10.0.13
       - run: dotnet build MotoGrid.slnx
-      - run: dotnet ef migrations add InitialCreate --project src/MotoGrid.Data --startup-project src/MotoGrid.Web --output-dir Migrations
-      - run: dotnet ef migrations script --project src/MotoGrid.Data --startup-project src/MotoGrid.Web --output schema.sql
-      - run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git add src/MotoGrid.Data/Migrations schema.sql
-          git commit -m "generated migration"
-          git push
+      - run: sleep 20
+      - name: Apply migration to real SQL Server
+        run: dotnet ef database update --project src/MotoGrid.Data --startup-project src/MotoGrid.Web --connection "Server=localhost,1433;Database=MotoGridCi;User Id=sa;Password=Ci_Test_Pass123!;TrustServerCertificate=True"
