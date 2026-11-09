@@ -20,7 +20,7 @@ TestResults/
 
 # Node
 node_modules/
-dist/
+/dist/
 
 # Secrets / local settings
 appsettings.Development.json
