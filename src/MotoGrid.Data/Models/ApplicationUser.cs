@@ -45,4 +45,10 @@ public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
 
     /// <summary>Users that this user follows.</summary>
     public ICollection<Follow> Following { get; set; } = new HashSet<Follow>();
+
+    public ICollection<GroupMember> GroupMemberships { get; set; } = new HashSet<GroupMember>();
+
+    public ICollection<EventParticipant> EventParticipations { get; set; } = new HashSet<EventParticipant>();
+
+    public ICollection<Route> Routes { get; set; } = new HashSet<Route>();
 }

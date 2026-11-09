@@ -27,6 +27,11 @@ public class Post : BaseEntity
 
     public Motorcycle? Motorcycle { get; set; }
 
+    /// <summary>Set when the post is published inside a group.</summary>
+    public int? GroupId { get; set; }
+
+    public Group? Group { get; set; }
+
     public ICollection<Media> Media { get; set; } = new HashSet<Media>();
 
     public ICollection<Comment> Comments { get; set; } = new HashSet<Comment>();
