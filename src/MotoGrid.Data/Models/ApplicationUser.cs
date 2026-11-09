@@ -51,4 +51,12 @@ public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     public ICollection<EventParticipant> EventParticipations { get; set; } = new HashSet<EventParticipant>();
 
     public ICollection<Route> Routes { get; set; } = new HashSet<Route>();
+
+    public ICollection<Listing> Listings { get; set; } = new HashSet<Listing>();
+
+    /// <summary>Reviews this user has received as a seller.</summary>
+    public ICollection<Review> ReceivedReviews { get; set; } = new HashSet<Review>();
+
+    /// <summary>Reviews this user has written as a buyer.</summary>
+    public ICollection<Review> WrittenReviews { get; set; } = new HashSet<Review>();
 }
